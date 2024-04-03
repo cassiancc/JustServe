@@ -1,0 +1,11 @@
+:root {
+    --white: #fff;
+    --black: #000;
+    --body: #18181B;
+}
+
+
+html {
+    scrollbar-color: #393939 #1f1f1f; 
+    
+}

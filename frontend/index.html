@@ -2,11 +2,27 @@
 <html>
     <head>
         <title>JustServe</title>
-        <link rel="stylesheet" href="/css/live.css">
+        <link rel="stylesheet" href="/css/frontend.css">
+        <link rel="stylesheet" href="/css/dark.css">
+        <link rel="stylesheet" href="/css/desktop.css">
+
     </head>
     <body>
+        <header>
+            <h1>JustServe</h1>
+        </header>
         <main>
-            <h1>JustServe Development Server</h1>
+            <form action="http://localhost:3000/upload" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" id="file">
+                <input type="submit" value="Submit">
+            </form>
         </main>
+        <footer>
+            <p id="copy">JustServe was designed by <a class="main-text" href="https://cassian.cc">Cassian Godsted</a> &copy; 2024.<br> JustServe is licensed under the <a class="main-text" href="https://github.com/cassiancc/TierAway/blob/main/LICENSE.md">GNU General Public License v3.0.</a></p>
+            <div>
+                <!-- <button id="change-theme-button" alt="Click to toggle between dark and light theme" class="fa fa-sun-o fa-2x main-text" onclick="changeSetting(`theme`)"></button> -->
+                <a target="_blank" href="https://github.com/cassiancc/JustServe" id="github" class="fa fa-github fa-3x main-text github" aria-hidden="true"></a>
+            </div>
+        </footer>
     </body>
 </html>

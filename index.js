@@ -1,4 +1,60 @@
 var liveServer = require("live-server");
+var http = require('http');
+var formidable = require('formidable');
+var fs = require('fs')
+
+// Create an HTTP server
+const server = http.createServer((req, res) => {
+	// Check if the request is for file upload
+	if (req.url === '/upload' && req.method.toLowerCase() === 'post') {
+	  // Initialize formidable form parser
+	  const form = new formidable.IncomingForm();
+  
+	  // Set the upload directory
+	  form.uploadDir = "./img";
+  
+	  // Parse the incoming form data
+	  form.parse(req, (err, fields, files) => {
+		if (err) {
+		  res.writeHead(500, { 'Content-Type': 'text/plain' });
+		  res.end('Internal Server Error');
+		  console.log(files)
+		  return;
+		}
+  
+		// Get the temporary path of the uploaded file
+		console.log(files)
+		const oldPath = files.file[0].filepath;
+  
+		// Generate a new path for the uploaded file
+		const newPath = form.uploadDir + "/" + files.file[0].originalFilename;
+  
+		// Move the uploaded file to the images directory
+		fs.rename(oldPath, newPath, (err) => {
+		  if (err) {
+			res.writeHead(500, { 'Content-Type': 'text/plain' });
+			res.end('Internal Server Error');
+			return;
+		  }
+  
+		  // Respond with a success message
+		  res.writeHead(200, { 'Content-Type': 'text/plain' });
+		  res.end('File uploaded successfully');
+		});
+	  });
+  
+	  return;
+	}
+  
+	// If the request is not for file upload or invalid route
+	res.writeHead(404, { 'Content-Type': 'text/plain' });
+	res.end('Not Found');
+  });
+  
+  // Listen on port 3000
+  server.listen(3000, () => {
+	console.log('Server is running on port 3000');
+  });
 
 var params = {
 	port: 5500, // Set the server port. Defaults to 8080.
