@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "formidable": "^3.5.1",
+    "live-server": "^1.1.0"
+  }
+}
