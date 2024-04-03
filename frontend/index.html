@@ -12,10 +12,18 @@
             <h1>JustServe</h1>
         </header>
         <main>
+            <h2>Add new content</h2>
             <form action="http://localhost:3000/upload" method="post" enctype="multipart/form-data">
                 <input type="file" name="file" id="file">
                 <input type="submit" value="Submit">
             </form>
+            <div>
+                <h2>Active Stations</h2>
+                <label for="station-1">Station 1    </label>
+                <select name="station-1" id="station-1">
+                    {{files}}
+                </select>
+            </div>
         </main>
         <footer>
             <p id="copy">JustServe was designed by <a class="main-text" href="https://cassian.cc">Cassian Godsted</a> &copy; 2024.<br> JustServe is licensed under the <a class="main-text" href="https://github.com/cassiancc/TierAway/blob/main/LICENSE.md">GNU General Public License v3.0.</a></p>

@@ -45,16 +45,48 @@ const server = http.createServer((req, res) => {
   
 	  return;
 	}
-  
+	else if (req.url === "/upload") {
+		fs.readFile('./frontend/index.html', 'utf8', (err, data) => {
+			if (err) {
+			  console.error(err);
+			  return;
+			}
+
+			list = ""
+			files = fs.readdirSync('img'); 
+			files.forEach(function(file) {
+					list += `                   
+					 <option value="${file}">${file}</option>
+					`
+					console.log(file)
+			})
+				
+			data = data.replace("{{files}}", list)
+			console.log(list)
+
+
+
+			res.write(data);
+			res.end();
+		  });
+		
+	}
+	else {
 	// If the request is not for file upload or invalid route
 	res.writeHead(404, { 'Content-Type': 'text/plain' });
 	res.end('Not Found');
+	}
+  
+
   });
   
   // Listen on port 3000
   server.listen(3000, () => {
 	console.log('Server is running on port 3000');
   });
+
+
+  
 
 var params = {
 	port: 5500, // Set the server port. Defaults to 8080.

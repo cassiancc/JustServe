@@ -24,7 +24,18 @@ header, footer {
     background-color: var(--black);
 }
 
-p, h1 {
+header {
+    padding: 1em;
+    margin-bottom: 1em;
+    border-bottom: solid var(--red) 3px;
+}
+
+header h1 {
+    margin: 0;
+}
+
+
+p, h1, label, h2 {
     color: var(--white);
 
 }
