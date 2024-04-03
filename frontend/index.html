@@ -19,11 +19,14 @@
             </form>
             <div>
                 <h2>Active Stations</h2>
-                <label for="station-1">Station 1    </label>
-                <select name="station-1" id="station-1">
-                    {{files}}
-                    <option value=""></option>
-                </select>
+                <form action="http://localhost:3000/change" method="post" enctype="multipart/form-data">
+                    <label for="station-1">Station 1    </label>
+                    <select name="station1" id="station1">
+                        {{files}}
+                    </select>
+                    <input type="submit" value="Submit">
+
+                </form>
             </div>
         </main>
         <footer>

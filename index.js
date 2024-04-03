@@ -71,6 +71,27 @@ const server = http.createServer((req, res) => {
 		  });
 		
 	}
+	else if (req.url === "/change") {
+		const form = new formidable.IncomingForm();
+		form.parse(req, (err, fields, files) => {
+			console.log(fields)
+		let data = `
+		<!DOCTYPE html>
+		<html>
+			<head>
+				<title>JustServe - Station 1</title>
+				<link rel="stylesheet" href="css/live.css">
+			</head>
+			<body>
+			<img id="content" src="img/${fields.station1}" alt="">
+			</body>
+		</html>`;
+		fs.writeFileSync("index.html", data)
+		res.write("Data submitted");
+		res.end();
+		})
+		
+	}
 	else {
 	// If the request is not for file upload or invalid route
 	res.writeHead(404, { 'Content-Type': 'text/plain' });
