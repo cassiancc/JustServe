@@ -8,6 +8,13 @@ var stations = 2
 var stations = fs.readFileSync('stations.txt', 'utf8')
 console.log(stations)
 
+const configuration = {
+	configurationIP: "127.0.0.1",
+	configurationPORT: "3000",
+	signageIP: "127.0.0.1",
+	signagePORT: "5500"
+}
+
 // Create an HTTP server
 const server = http.createServer((req, res) => {
 	// Check if the request is for file upload
@@ -61,7 +68,7 @@ const server = http.createServer((req, res) => {
 
 			for (let i = 1; i <= stations; i++) { 
 				stationString += 
-				`<label for="station${i}"><a href="http://127.0.0.1:5500/" target="_blank" rel="noopener noreferrer">Station ${i}</a> </label>
+				`<label for="station${i}"><a href="http://${configuration.signageIP}:${configuration.signagePORT}/index${i}.html" target="_blank" rel="noopener noreferrer">Station ${i}</a> </label>
 				<select name="station${i}" id="station${i}">
 					{{files}}
 				</select>`
@@ -115,12 +122,12 @@ const server = http.createServer((req, res) => {
 		<html lang="en-US">
 		  <meta charset="utf-8">
 		  <title>Redirecting&hellip;</title>
-		  <link rel="canonical" href="http://localhost:3000/upload">
-		  <script>location="http://localhost:3000/upload"</script>
-		  <meta http-equiv="refresh" content="0; url="http://localhost:3000/upload">
+		  <link rel="canonical" href="http://${configuration.configurationIP}:${configuration.configurationPORT}/upload">
+		  <script>location="http://${configuration.configurationIP}:${configuration.configurationPORT}/upload"</script>
+		  <meta http-equiv="refresh" content="0; url="http://${configuration.configurationIP}:${configuration.configurationPORT}/upload">
 		  <meta name="robots" content="noindex">
 		  <h1>Redirecting&hellip;</h1>
-		  <a href="http://localhost:3000/upload">Click here if you are not redirected.</a>
+		  <a href="http://${configuration.configurationIP}:${configuration.configurationPORT}/upload">Click here if you are not redirected.</a>
 		</html>
 		`);
 
@@ -209,15 +216,15 @@ const server = http.createServer((req, res) => {
   });
   
   // Listen on port 3000
-  server.listen(3000, () => {
-	console.log('Server is running on port 3000');
+  server.listen(configuration.configurationPORT, () => {
+	console.log('Server is running on port ' + configuration.configurationPORT);
   });
 
 
   
 
 var params = {
-	port: 5500, // Set the server port. Defaults to 8080.
+	port: configuration.signagePORT, // Set the server port. Defaults to 8080.
 	host: "0.0.0.0", // Set the address to bind to. Defaults to 0.0.0.0 or process.env.IP.
 	open: false, // When false, it won't load your browser by default.
 	ignore: 'scss,my/templates', // comma-separated string for paths to ignore
