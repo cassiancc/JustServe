@@ -18,6 +18,9 @@ body {
 
 main {
     min-height: 85vh;
+    width: 90%;
+    margin: auto;
+    padding-bottom: 3em;
 }
 
 footer {
@@ -109,11 +112,6 @@ button:hover {
 #submit-changes, #upload-changes {
     margin-top: 1em;
     width: fit-content;
-}
-
-main {
-    width: 90%;
-    margin: auto;
 }
 
 

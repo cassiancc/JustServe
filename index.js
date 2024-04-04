@@ -128,6 +128,14 @@ const server = http.createServer((req, res) => {
 		})
 		
 	}
+	else if (req.url === "/api/newstation") { 
+		stations = parseInt(stations) + 1
+		console.log(stations)
+		fs.writeFileSync("stations.txt", stations.toString())
+		res.write("Station count updated.");
+		res.end();
+	}
+
 	//FRONTEND CSS/JS
 	else if (req.url === '/css/dark.css') {
 		fs.readFile('./css/dark.css', 'utf8', (err, data) => { 
@@ -150,7 +158,7 @@ const server = http.createServer((req, res) => {
 		})
 	}
 	else if (req.url === '/js/frontend.js') {
-		fs.readFile('./js/frontend.css', 'utf8', (err, data) => { 
+		fs.readFile('./js/frontend.js', 'utf8', (err, data) => { 
 			res.write(data);
 			res.end();
 		})
