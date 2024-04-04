@@ -135,6 +135,13 @@ const server = http.createServer((req, res) => {
 		res.write("Station count updated.");
 		res.end();
 	}
+	else if (req.url === "/api/rmstation") { 
+		stations = parseInt(stations) - 1
+		console.log(stations)
+		fs.writeFileSync("stations.txt", stations.toString())
+		res.write("Station count updated.");
+		res.end();
+	}
 
 	//FRONTEND CSS/JS
 	else if (req.url === '/css/dark.css') {

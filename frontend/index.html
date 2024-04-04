@@ -25,10 +25,17 @@
             <div>
                 <div id="add-station" class="flex">
                     <h2>Station Management</h2>
-                    <button onclick="newStation()">
-                        <i class="fa fa-plus" aria-hidden="true"></i>
-                        Add Station
-                    </button>
+                    <div>
+                        <button onclick="newStation()">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            Add Station
+                        </button>
+                        <button onclick="rmStation()">
+                            <i class="fa fa-minus" aria-hidden="true"></i>
+                            Remove Station
+                        </button>
+                    </div>
+                    
                 </div>
                 <form action="/change" method="post" enctype="multipart/form-data">
                     <div id="stations" class="station-div">

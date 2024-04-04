@@ -89,6 +89,11 @@ button {
     transform: color .01s, border-color 1s;
 }
 
+#add-station div {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
 button:hover {
     /* background-color: var(--button-hover); */
     border-color: var(--red);
