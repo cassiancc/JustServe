@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>JustServe</title>
+        <title>JustServe Digital Signage</title>
         <link rel="stylesheet" href="http://localhost:5500/css/frontend.css">
         <link rel="stylesheet" href="http://localhost:5500/css/dark.css">
         <link rel="stylesheet" href="http://localhost:5500/css/desktop.css">
@@ -9,22 +9,30 @@
     </head>
     <body>
         <header>
-            <h1>JustServe</h1>
+            <h1>JustServe Digital Signage</h1>
         </header>
         <main>
-            <h2>Add new content</h2>
-            <form action="http://localhost:3000/upload" method="post" enctype="multipart/form-data">
-                <input type="file" name="file" id="file">
-                <input type="submit" value="Submit">
-            </form>
+            <h2>Content Management</h2>
+            <div id="new-content" class="station-div">
+                <form action="http://localhost:3000/upload" method="post" enctype="multipart/form-data">
+                    <label for="file">Upload New Files</label>
+                    <input type="file" name="file" id="file">
+                    <input id="upload-changes" type="submit" value="Submit">
+                </form>
+            </div>
             <div>
-                <h2>Active Stations</h2>
+                <h2>Station Management</h2>
                 <form action="http://localhost:3000/change" method="post" enctype="multipart/form-data">
-                    <label for="station-1">Station 1    </label>
-                    <select name="station1" id="station1">
-                        {{files}}
-                    </select>
-                    <input type="submit" value="Submit">
+                    <div class="station-div">
+                        <label for="station-1"><a href="http://127.0.0.1:5500/" target="_blank" rel="noopener noreferrer">Station 1</a> </label>
+                        <select name="station1" id="station1">
+                            {{files}}
+                        </select>
+                        <input id="submit-changes" type="submit" value="Apply Changes">
+
+                    </div>
+                    
+                    
 
                 </form>
             </div>
