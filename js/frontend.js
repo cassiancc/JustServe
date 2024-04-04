@@ -30,3 +30,26 @@ async function rmStation() {
         location.reload()
     }
 }
+let stations;
+async function getStations() {
+    try {
+        const response = await fetch('/api/stations');
+        stations = await response.json();
+    } catch (error) {
+        console.error('Failed to load station data!', error);
+    }
+}
+
+async function loadCurrentStationContent() {
+    await getStations()
+    let arrayStations = Object.entries(stations)
+    arrayStations.forEach(function(station) {
+        console.log(station[0], station[1])
+        let selected = document.querySelector(`#${station[0]} option[value="${station[1]}"]`)
+        selected.defaultSelected = true
+        console.log(selected)
+
+    })
+
+}
+loadCurrentStationContent()

@@ -122,14 +122,15 @@ const server = http.createServer((req, res) => {
 				<html lang="en-US">
 				<meta charset="utf-8">
 				<title>Redirecting&hellip;</title>
-				<link rel="canonical" href="http://${configuration.configurationIP}:${configuration.configurationPORT}/upload">
-				<script>location="http://${configuration.configurationIP}:${configuration.configurationPORT}/upload"</script>
-				<meta http-equiv="refresh" content="0; url="http://${configuration.configurationIP}:${configuration.configurationPORT}/upload">
+				<link rel="canonical" href="http://${configuration.configurationIP}:${configuration.configurationPORT}/">
+				<script>location="http://${configuration.configurationIP}:${configuration.configurationPORT}/"</script>
+				<meta http-equiv="refresh" content="0; url="http://${configuration.configurationIP}:${configuration.configurationPORT}/">
 				<meta name="robots" content="noindex">
 				<h1>Redirecting&hellip;</h1>
-				<a href="http://${configuration.configurationIP}:${configuration.configurationPORT}/upload">Click here if you are not redirected.</a>
+				<a href="http://${configuration.configurationIP}:${configuration.configurationPORT}/">Click here if you are not redirected.</a>
 				</html>
 			`);
+			fs.writeFileSync("./api/stations.json", JSON.stringify(stations))
 			res.end();
 			})	
 	}
@@ -137,7 +138,7 @@ const server = http.createServer((req, res) => {
 	else if (req.url === "/api/newstation") { 
 		stationCount = parseInt(stationCount) + 1
 		console.log(stationCount)
-		fs.writeFileSync("stations.txt", stations.toString())
+		fs.writeFileSync("stations.txt", stationCount.toString())
 		res.write("Station count updated.");
 		res.end();
 	}
@@ -148,6 +149,12 @@ const server = http.createServer((req, res) => {
 		fs.writeFileSync("stations.txt", stationCount.toString())
 		res.write("Station count updated.");
 		res.end();
+	}
+	else if (req.url === '/api/stations') {
+		fs.readFile('./api/stations.json', 'utf8', (err, data) => { 
+			res.write(data);
+			res.end();
+		})
 	}
 
 	//FRONTEND CSS/JS
