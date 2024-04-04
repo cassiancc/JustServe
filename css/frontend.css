@@ -110,17 +110,20 @@ button:hover {
 
 }
 
-.station-div label {
+.station-div h3 {
     font-size: 1.5em;
+    display: inline;
+
+}
+
+.station-div label {
     margin-top: .5em;
     margin-bottom: .5em;
     font-weight: bold;
-
 }
 
 .station-div a {
     color: var(--white);
-    text-decoration: none;
 
 }
 

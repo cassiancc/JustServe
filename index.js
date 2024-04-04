@@ -77,7 +77,14 @@ const server = http.createServer((req, res) => {
 
 			for (let i = 1; i <= stationCount; i++) { 
 				stationString += 
-				`<label for="station${i}"><a href="http://${configuration.signageIP}:${configuration.signagePORT}/index${i}.html" target="_blank" rel="noopener noreferrer">Station ${i}</a> </label>
+				`<label for="station${i}">
+					<h3>
+						Station ${i} | 
+					</h3>
+					<a href="http://${configuration.signageIP}:${configuration.signagePORT}/index${i}.html" target="_blank" rel="noopener noreferrer">
+						View Station
+					</a> 
+				</label>
 				<select name="station${i}" id="station${i}">
 					${list}
 				</select>`
