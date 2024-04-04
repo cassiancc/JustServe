@@ -4,15 +4,19 @@ var formidable = require('formidable');
 var fs = require('fs')
 
 //setup initial station count from stations.txt
-var stations = 2
-var stations = fs.readFileSync('stations.txt', 'utf8')
-console.log(stations)
+var stationCount = 2
+var stationCount = fs.readFileSync('stations.txt', 'utf8')
 
 const configuration = {
 	configurationIP: "127.0.0.1",
 	configurationPORT: "3000",
 	signageIP: "127.0.0.1",
 	signagePORT: "5500"
+}
+
+let stations = {
+	station1: "testing.jpg",
+	station2: "evenmoretest.jpg"
 }
 
 // Create an HTTP server
@@ -30,12 +34,10 @@ const server = http.createServer((req, res) => {
 		if (err) {
 		  res.writeHead(500, { 'Content-Type': 'text/plain' });
 		  res.end('Internal Server Error');
-		  console.log(files)
 		  return;
 		}
   
 		// Get the temporary path of the uploaded file
-		console.log(files)
 		const oldPath = files.file[0].filepath;
   
 		// Generate a new path for the uploaded file
@@ -65,87 +67,87 @@ const server = http.createServer((req, res) => {
 			}
 
 			let stationString = ""
-
-			for (let i = 1; i <= stations; i++) { 
-				stationString += 
-				`<label for="station${i}"><a href="http://${configuration.signageIP}:${configuration.signagePORT}/index${i}.html" target="_blank" rel="noopener noreferrer">Station ${i}</a> </label>
-				<select name="station${i}" id="station${i}">
-					{{files}}
-				</select>`
-			}
-
-
 			let list = ""
 			files = fs.readdirSync('img'); 
 			files.forEach(function(file) {
 					list += `                   
 					 <option value="${file}">${file}</option>
 					`
-					console.log(file)
 			})
-				
+
+
+
+			for (let i = 1; i <= stationCount; i++) { 
+				stationString += 
+				`<label for="station${i}"><a href="http://${configuration.signageIP}:${configuration.signagePORT}/index${i}.html" target="_blank" rel="noopener noreferrer">Station ${i}</a> </label>
+				<select name="station${i}" id="station${i}">
+					${list}
+				</select>`
+			}
+
 			data = data.replace("{{stations}}", stationString)
-			data = data.replaceAll("{{files}}", list)
-			console.log(list)
-
-
-
 			res.write(data);
 			res.end();
 		  });
 		
 	}
+	//CONFIGURATION PAGE - CHANGE CONTENT OF FRONTEND
 	else if (req.url === "/change") {
 		const form = new formidable.IncomingForm();
 		form.parse(req, (err, fields, files) => {
-			console.log(fields)
-		let arrayFields = Object.entries(fields)
-		// console.log(fields[0][1][0])
+			stations = fields
+			console.log(stations)
+			let arrayFields = Object.entries(fields)
+			
 
-		for (let i = 1; i <= stations; i++) {
-			fs.writeFileSync(`index${i}.html`, 
-			`<!DOCTYPE html>
-			<html>
-				<head>
-					<title>JustServe - Station ${i}</title>
-					<link rel="stylesheet" href="css/live.css">
-				</head>
-				<body>
-					<img id="content" src="img/${arrayFields[i-1][1][0]}" alt="">
-				</body>
-			</html>`)
-		} 
+			//Iterate over station count
+			for (let i = 1; i <= stationCount; i++) {
+				//Convert station object's arrays into strings
+				stations["station" + i] = arrayFields[i-1][1][0]
+				//Write new frontend pages with changed data
+				fs.writeFileSync(`index${i}.html`, 
+				`<!DOCTYPE html>
+				<html>
+					<head>
+						<title>JustServe - Station ${i}</title>
+						<link rel="stylesheet" href="css/live.css">
+					</head>
+					<body>
+						<img id="content" src="img/${arrayFields[i-1][1][0]}" alt="">
+					</body>
+				</html>`)
+			} 
 
-		// fs.writeFileSync("index.html", data)
-		res.write(`
-		<!DOCTYPE html>
-		<html lang="en-US">
-		  <meta charset="utf-8">
-		  <title>Redirecting&hellip;</title>
-		  <link rel="canonical" href="http://${configuration.configurationIP}:${configuration.configurationPORT}/upload">
-		  <script>location="http://${configuration.configurationIP}:${configuration.configurationPORT}/upload"</script>
-		  <meta http-equiv="refresh" content="0; url="http://${configuration.configurationIP}:${configuration.configurationPORT}/upload">
-		  <meta name="robots" content="noindex">
-		  <h1>Redirecting&hellip;</h1>
-		  <a href="http://${configuration.configurationIP}:${configuration.configurationPORT}/upload">Click here if you are not redirected.</a>
-		</html>
-		`);
-
-		res.end();
-		})
-		
+			//Redirect end user to main configuration page
+			res.write(`
+			<!DOCTYPE html>
+			<html lang="en-US">
+			<meta charset="utf-8">
+			<title>Redirecting&hellip;</title>
+			<link rel="canonical" href="http://${configuration.configurationIP}:${configuration.configurationPORT}/upload">
+			<script>location="http://${configuration.configurationIP}:${configuration.configurationPORT}/upload"</script>
+			<meta http-equiv="refresh" content="0; url="http://${configuration.configurationIP}:${configuration.configurationPORT}/upload">
+			<meta name="robots" content="noindex">
+			<h1>Redirecting&hellip;</h1>
+			<a href="http://${configuration.configurationIP}:${configuration.configurationPORT}/upload">Click here if you are not redirected.</a>
+			</html>
+			`);
+			res.end();
+			})	
 	}
+	//Add new station
 	else if (req.url === "/api/newstation") { 
-		stations = parseInt(stations) + 1
-		console.log(stations)
+		stationCount = parseInt(stationCount) + 1
+		console.log(stationCount)
 		fs.writeFileSync("stations.txt", stations.toString())
 		res.write("Station count updated.");
 		res.end();
 	}
+	//Remove one station
 	else if (req.url === "/api/rmstation") { 
-		stations = parseInt(stations) - 1
-		console.log(stations)
-		fs.writeFileSync("stations.txt", stations.toString())
+		stationCount = parseInt(stationCount) - 1
+		console.log(stationCount)
+		fs.writeFileSync("stations.txt", stationCount.toString())
 		res.write("Station count updated.");
 		res.end();
 	}
