@@ -23,16 +23,8 @@
             <div>
                 <h2>Station Management</h2>
                 <form action="http://localhost:3000/change" method="post" enctype="multipart/form-data">
-                    <div class="station-div">
-                        <label for="station1"><a href="http://127.0.0.1:5500/" target="_blank" rel="noopener noreferrer">Station 1</a> </label>
-                        <select name="station1" id="station1">
-                            {{files}}
-                        </select>
-
-                        <label for="station2"><a href="http://127.0.0.1:5500/" target="_blank" rel="noopener noreferrer">Station 2</a> </label>
-                        <select name="station2" id="station2">
-                            {{files}}
-                        </select>
+                    <div id="stations" class="station-div">
+                        {{stations}}
                         <input id="submit-changes" type="submit" value="Apply Changes">
 
                     </div>

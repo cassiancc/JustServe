@@ -3,7 +3,10 @@ var http = require('http');
 var formidable = require('formidable');
 var fs = require('fs')
 
+//setup initial station count from stations.txt
 var stations = 2
+var stations = fs.readFileSync('stations.txt', 'utf8')
+console.log(stations)
 
 // Create an HTTP server
 const server = http.createServer((req, res) => {
@@ -54,6 +57,17 @@ const server = http.createServer((req, res) => {
 			  return;
 			}
 
+			let stationString = ""
+
+			for (let i = 1; i <= stations; i++) { 
+				stationString += 
+				`<label for="station${i}"><a href="http://127.0.0.1:5500/" target="_blank" rel="noopener noreferrer">Station ${i}</a> </label>
+				<select name="station${i}" id="station${i}">
+					{{files}}
+				</select>`
+			}
+
+
 			list = ""
 			files = fs.readdirSync('img'); 
 			files.forEach(function(file) {
@@ -63,7 +77,7 @@ const server = http.createServer((req, res) => {
 					console.log(file)
 			})
 				
-			// data = data.replace("{{files}}", list)
+			data = data.replace("{{stations}}", stationString)
 			data = data.replaceAll("{{files}}", list)
 			console.log(list)
 
@@ -76,13 +90,12 @@ const server = http.createServer((req, res) => {
 	}
 	else if (req.url === "/change") {
 		const form = new formidable.IncomingForm();
-		console.log(stations)
 		form.parse(req, (err, fields, files) => {
 			console.log(fields)
 		let arrayFields = Object.entries(fields)
 		// console.log(fields[0][1][0])
 
-		for (let i = 1; i <= 2; i++) {
+		for (let i = 1; i <= stations; i++) {
 			fs.writeFileSync(`index${i}.html`, 
 			`<!DOCTYPE html>
 			<html>
@@ -91,7 +104,7 @@ const server = http.createServer((req, res) => {
 					<link rel="stylesheet" href="css/live.css">
 				</head>
 				<body>
-				<img id="content" src="img/${arrayFields[i-1][1][0]}" alt="">
+					<img id="content" src="img/${arrayFields[i-1][1][0]}" alt="">
 				</body>
 			</html>`)
 		} 
