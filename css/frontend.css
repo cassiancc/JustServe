@@ -23,15 +23,25 @@ main {
     padding-bottom: 3em;
 }
 
+footer a {
+    color: var(--white);
+}
+
+footer a:hover {
+    color: var(--red);
+}
+
 footer {
     display: flex;
     background-color: var(--black);
     justify-content: space-between;
+    padding-right: 1em;
+    padding-left: 1em;
+
 
 }
 
 footer div {
-    margin-right: 1em;
     margin-top: auto;
     margin-bottom: auto;
 }
