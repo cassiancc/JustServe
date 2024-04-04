@@ -59,6 +59,7 @@ const server = http.createServer((req, res) => {
   
 	  return;
 	}
+	//Frontend configuration page
 	else if (req.url === "/upload") {
 		fs.readFile('./frontend/index.html', 'utf8', (err, data) => {
 			if (err) {
@@ -66,16 +67,13 @@ const server = http.createServer((req, res) => {
 			  return;
 			}
 
-			let stationString = ""
-			let list = ""
+			let stationString = "", list = ""
 			files = fs.readdirSync('img'); 
 			files.forEach(function(file) {
 					list += `                   
 					 <option value="${file}">${file}</option>
 					`
 			})
-
-
 
 			for (let i = 1; i <= stationCount; i++) { 
 				stationString += 
@@ -98,7 +96,6 @@ const server = http.createServer((req, res) => {
 			stations = fields
 			console.log(stations)
 			let arrayFields = Object.entries(fields)
-			
 
 			//Iterate over station count
 			for (let i = 1; i <= stationCount; i++) {
@@ -106,31 +103,32 @@ const server = http.createServer((req, res) => {
 				stations["station" + i] = arrayFields[i-1][1][0]
 				//Write new frontend pages with changed data
 				fs.writeFileSync(`index${i}.html`, 
-				`<!DOCTYPE html>
-				<html>
-					<head>
-						<title>JustServe - Station ${i}</title>
-						<link rel="stylesheet" href="css/live.css">
-					</head>
-					<body>
-						<img id="content" src="img/${arrayFields[i-1][1][0]}" alt="">
-					</body>
-				</html>`)
+					`<!DOCTYPE html>
+					<html>
+						<head>
+							<title>JustServe - Station ${i}</title>
+							<link rel="stylesheet" href="css/live.css">
+						</head>
+						<body>
+							<img id="content" src="img/${arrayFields[i-1][1][0]}" alt="">
+						</body>
+					</html>
+				`)
 			} 
 
 			//Redirect end user to main configuration page
 			res.write(`
-			<!DOCTYPE html>
-			<html lang="en-US">
-			<meta charset="utf-8">
-			<title>Redirecting&hellip;</title>
-			<link rel="canonical" href="http://${configuration.configurationIP}:${configuration.configurationPORT}/upload">
-			<script>location="http://${configuration.configurationIP}:${configuration.configurationPORT}/upload"</script>
-			<meta http-equiv="refresh" content="0; url="http://${configuration.configurationIP}:${configuration.configurationPORT}/upload">
-			<meta name="robots" content="noindex">
-			<h1>Redirecting&hellip;</h1>
-			<a href="http://${configuration.configurationIP}:${configuration.configurationPORT}/upload">Click here if you are not redirected.</a>
-			</html>
+				<!DOCTYPE html>
+				<html lang="en-US">
+				<meta charset="utf-8">
+				<title>Redirecting&hellip;</title>
+				<link rel="canonical" href="http://${configuration.configurationIP}:${configuration.configurationPORT}/upload">
+				<script>location="http://${configuration.configurationIP}:${configuration.configurationPORT}/upload"</script>
+				<meta http-equiv="refresh" content="0; url="http://${configuration.configurationIP}:${configuration.configurationPORT}/upload">
+				<meta name="robots" content="noindex">
+				<h1>Redirecting&hellip;</h1>
+				<a href="http://${configuration.configurationIP}:${configuration.configurationPORT}/upload">Click here if you are not redirected.</a>
+				</html>
 			`);
 			res.end();
 			})	
@@ -206,15 +204,12 @@ const server = http.createServer((req, res) => {
 			res.write(data);
 			res.end();
 		})
-	}
-	
+	}	
 	else {
-	// If the request is not for file upload or invalid route
-	res.writeHead(404, { 'Content-Type': 'text/plain' });
-	res.end('Not Found');
+		// If the request is not for file upload or invalid route
+		res.writeHead(404, { 'Content-Type': 'text/plain' });
+		res.end('Not Found');
 	}
-  
-
   });
   
   // Listen on port 3000
@@ -224,12 +219,12 @@ const server = http.createServer((req, res) => {
 
 
   
-
+//Live server configuration for frontend signage.
 var params = {
 	port: configuration.signagePORT, // Set the server port. Defaults to 8080.
 	host: "0.0.0.0", // Set the address to bind to. Defaults to 0.0.0.0 or process.env.IP.
 	open: false, // When false, it won't load your browser by default.
-	ignore: 'scss,my/templates', // comma-separated string for paths to ignore
+	ignore: 'scss,my/templates,frontend/index.html', // comma-separated string for paths to ignore
 	file: "index.html", // When set, serve this file (server root relative) for every 404 (useful for single-page applications)
 	wait: 1000, // Waits for all changes, before reloading. Defaults to 0 sec.
 	mount: [['/components', './node_modules']], // Mount a directory to a route.
