@@ -214,7 +214,7 @@ const server = http.createServer((req, res) => {
   
   // Listen on port 3000
   server.listen(configuration.configurationPORT, () => {
-	console.log('Server is running on port ' + configuration.configurationPORT);
+	console.log('Configuration server is running on port ' + configuration.configurationPORT);
   });
 
 
@@ -232,5 +232,5 @@ var params = {
 	middleware: [function(req, res, next) { next(); }] // Takes an array of Connect-compatible middleware that are injected into the server middleware stack
 };
 liveServer.start(params);
-console.log("JustServe development build running...")
+console.log("Signage server is running on port " + configuration.signagePORT)
 
