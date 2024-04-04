@@ -166,6 +166,7 @@ const server = http.createServer((req, res) => {
 	}
 	else if (req.url === '/js/frontend.js') {
 		fs.readFile('./js/frontend.js', 'utf8', (err, data) => { 
+			res.setHeader('Content-Type', 'text/javascript');
 			res.write(data);
 			res.end();
 		})
