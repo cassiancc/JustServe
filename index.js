@@ -68,7 +68,7 @@ const server = http.createServer((req, res) => {
 			}
 
 
-			list = ""
+			let list = ""
 			files = fs.readdirSync('img'); 
 			files.forEach(function(file) {
 					list += `                   
@@ -110,11 +110,79 @@ const server = http.createServer((req, res) => {
 		} 
 
 		// fs.writeFileSync("index.html", data)
-		res.write("Data submitted");
+		res.write(`
+		<!DOCTYPE html>
+		<html lang="en-US">
+		  <meta charset="utf-8">
+		  <title>Redirecting&hellip;</title>
+		  <link rel="canonical" href="http://localhost:3000/upload">
+		  <script>location="http://localhost:3000/upload"</script>
+		  <meta http-equiv="refresh" content="0; url="http://localhost:3000/upload">
+		  <meta name="robots" content="noindex">
+		  <h1>Redirecting&hellip;</h1>
+		  <a href="http://localhost:3000/upload">Click here if you are not redirected.</a>
+		</html>
+		`);
+
 		res.end();
 		})
 		
 	}
+	//FRONTEND CSS/JS
+	else if (req.url === '/css/dark.css') {
+		fs.readFile('./css/dark.css', 'utf8', (err, data) => { 
+			res.write(data);
+			res.end();
+		})
+
+
+	}
+	else if (req.url === '/css/frontend.css') {
+		fs.readFile('./css/frontend.css', 'utf8', (err, data) => { 
+			res.write(data);
+			res.end();
+		})
+	}
+	else if (req.url === '/css/desktop.css') {
+		fs.readFile('./css/desktop.css', 'utf8', (err, data) => { 
+			res.write(data);
+			res.end();
+		})
+	}
+	else if (req.url === '/js/frontend.js') {
+		fs.readFile('./js/frontend.css', 'utf8', (err, data) => { 
+			res.write(data);
+			res.end();
+		})
+	}
+	//FONT AWESOME
+	else if (req.url === '/css/font-awesome/css/font-awesome.min.css') {
+		fs.readFile('./css/font-awesome/css/font-awesome.min.css', 'utf8', (err, data) => { 
+			res.write(data);
+			res.end();
+		})
+
+
+	}
+	else if (req.url === `/css/font-awesome/fonts/fontawesome-webfont.woff?v=4.7.0`) {
+		fs.readFile('./css/font-awesome/fonts/fontawesome-webfont.woff', (err, data) => { 
+			res.write(data);
+			res.end();
+		})
+	}
+	else if (req.url === `/css/font-awesome/fonts/fontawesome-webfont.woff2?v=4.7.0`) {
+		fs.readFile('./css/font-awesome/fonts/fontawesome-webfont.woff2', (err, data) => { 
+			res.write(data);
+			res.end();
+		})
+	}
+	else if (req.url === `/css/font-awesome/fonts/fontawesome-webfont.ttf?v=4.7.0`) {
+		fs.readFile('./css/font-awesome/fonts/fontawesome-webfont.ttf', (err, data) => { 
+			res.write(data);
+			res.end();
+		})
+	}
+	
 	else {
 	// If the request is not for file upload or invalid route
 	res.writeHead(404, { 'Content-Type': 'text/plain' });

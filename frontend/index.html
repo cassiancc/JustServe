@@ -2,9 +2,11 @@
 <html>
     <head>
         <title>JustServe Digital Signage</title>
-        <link rel="stylesheet" href="http://localhost:5500/css/frontend.css">
-        <link rel="stylesheet" href="http://localhost:5500/css/dark.css">
-        <link rel="stylesheet" href="http://localhost:5500/css/desktop.css">
+        <link rel="stylesheet" href="/css/frontend.css">
+        <link rel="stylesheet" href="/css/dark.css">
+        <link rel="stylesheet" href="/css/desktop.css">
+        <link rel="stylesheet" href="/css/font-awesome/css/font-awesome.min.css">
+
 
     </head>
     <body>
@@ -14,15 +16,21 @@
         <main>
             <h2>Content Management</h2>
             <div id="new-content" class="station-div">
-                <form action="http://localhost:3000/upload" method="post" enctype="multipart/form-data">
+                <form action="/upload" method="post" enctype="multipart/form-data">
                     <label for="file">Upload New Files</label>
-                    <input type="file" name="file" id="file">
+                    <input type="file" accept="image/png, image/jpeg" name="file" id="file">
                     <input id="upload-changes" type="submit" value="Submit">
                 </form>
             </div>
             <div>
-                <h2>Station Management</h2>
-                <form action="http://localhost:3000/change" method="post" enctype="multipart/form-data">
+                <div id="add-station" class="flex">
+                    <h2>Station Management</h2>
+                    <button onclick="newStation()">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        Add Station
+                    </button>
+                </div>
+                <form action="/change" method="post" enctype="multipart/form-data">
                     <div id="stations" class="station-div">
                         {{stations}}
                         <input id="submit-changes" type="submit" value="Apply Changes">
