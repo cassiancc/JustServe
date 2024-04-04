@@ -3,6 +3,8 @@ var http = require('http');
 var formidable = require('formidable');
 var fs = require('fs')
 
+var stations = 2
+
 // Create an HTTP server
 const server = http.createServer((req, res) => {
 	// Check if the request is for file upload
@@ -61,7 +63,8 @@ const server = http.createServer((req, res) => {
 					console.log(file)
 			})
 				
-			data = data.replace("{{files}}", list)
+			// data = data.replace("{{files}}", list)
+			data = data.replaceAll("{{files}}", list)
 			console.log(list)
 
 
@@ -73,20 +76,27 @@ const server = http.createServer((req, res) => {
 	}
 	else if (req.url === "/change") {
 		const form = new formidable.IncomingForm();
+		console.log(stations)
 		form.parse(req, (err, fields, files) => {
 			console.log(fields)
-		let data = `
-		<!DOCTYPE html>
-		<html>
-			<head>
-				<title>JustServe - Station 1</title>
-				<link rel="stylesheet" href="css/live.css">
-			</head>
-			<body>
-			<img id="content" src="img/${fields.station1}" alt="">
-			</body>
-		</html>`;
-		fs.writeFileSync("index.html", data)
+		let arrayFields = Object.entries(fields)
+		// console.log(fields[0][1][0])
+
+		for (let i = 1; i <= 2; i++) {
+			fs.writeFileSync(`index${i}.html`, 
+			`<!DOCTYPE html>
+			<html>
+				<head>
+					<title>JustServe - Station ${i}</title>
+					<link rel="stylesheet" href="css/live.css">
+				</head>
+				<body>
+				<img id="content" src="img/${arrayFields[i-1][1][0]}" alt="">
+				</body>
+			</html>`)
+		} 
+
+		// fs.writeFileSync("index.html", data)
 		res.write("Data submitted");
 		res.end();
 		})
@@ -122,3 +132,4 @@ var params = {
 };
 liveServer.start(params);
 console.log("JustServe development build running...")
+
