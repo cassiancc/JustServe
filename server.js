@@ -5,7 +5,26 @@ var fs = require('fs')
 
 //setup initial station count from stations.txt
 var stationCount = 2
-var stationCount = fs.readFileSync('stations.txt', 'utf8')
+try {
+	stationCount = fs.readFileSync('./config/stations.txt', 'utf8')
+
+}
+catch {
+	fs.writeFileSync('./config/stations.txt', stationCount.toString())
+}
+let stations = {
+	station1: "testing.jpg",
+	station2: "evenmoretest.jpg"
+}
+
+
+try {
+	stations = fs.readFileSync('./config/stations.json', 'utf8')
+
+}
+catch {
+	fs.writeFileSync('./config/stations.json', JSON.stringify(stations))
+}
 
 const configuration = {
 	configurationIP: "127.0.0.1",
@@ -14,10 +33,7 @@ const configuration = {
 	signagePORT: "5500"
 }
 
-let stations = {
-	station1: "testing.jpg",
-	station2: "evenmoretest.jpg"
-}
+
 
 // Create an HTTP server
 const server = http.createServer((req, res) => {
@@ -109,7 +125,7 @@ const server = http.createServer((req, res) => {
 				//Convert station object's arrays into strings
 				stations["station" + i] = arrayFields[i-1][1][0]
 				//Write new frontend pages with changed data
-				fs.writeFileSync(`index${i}.html`, 
+				fs.writeFileSync(`./signage/index${i}.html`, 
 					`<!DOCTYPE html>
 					<html>
 						<head>
@@ -137,7 +153,7 @@ const server = http.createServer((req, res) => {
 				<a href="http://${configuration.configurationIP}:${configuration.configurationPORT}/">Click here if you are not redirected.</a>
 				</html>
 			`);
-			fs.writeFileSync("./api/stations.json", JSON.stringify(stations))
+			fs.writeFileSync("./config/stations.json", JSON.stringify(stations))
 			res.end();
 			})	
 	}
@@ -145,7 +161,7 @@ const server = http.createServer((req, res) => {
 	else if (req.url === "/api/newstation") { 
 		stationCount = parseInt(stationCount) + 1
 		console.log(stationCount)
-		fs.writeFileSync("stations.txt", stationCount.toString())
+		fs.writeFileSync("./config/stations.txt", stationCount.toString())
 		res.write("Station count updated.");
 		res.end();
 	}
@@ -153,12 +169,12 @@ const server = http.createServer((req, res) => {
 	else if (req.url === "/api/rmstation") { 
 		stationCount = parseInt(stationCount) - 1
 		console.log(stationCount)
-		fs.writeFileSync("stations.txt", stationCount.toString())
+		fs.writeFileSync("./config/stations.txt", stationCount.toString())
 		res.write("Station count updated.");
 		res.end();
 	}
 	else if (req.url === '/api/stations') {
-		fs.readFile('./api/stations.json', 'utf8', (err, data) => { 
+		fs.readFile('./config/stations.json', 'utf8', (err, data) => { 
 			res.write(data);
 			res.end();
 		})
@@ -239,9 +255,9 @@ var params = {
 	host: "0.0.0.0", // Set the address to bind to. Defaults to 0.0.0.0 or process.env.IP.
 	open: false, // When false, it won't load your browser by default.
 	ignore: 'scss,my/templates,frontend/index.html', // comma-separated string for paths to ignore
-	file: "index1.html", // When set, serve this file (server root relative) for every 404 (useful for single-page applications)
+	file: "signage/index1.html", // When set, serve this file (server root relative) for every 404 (useful for single-page applications)
 	wait: 1000, // Waits for all changes, before reloading. Defaults to 0 sec.
-	mount: [['/components', './node_modules']], // Mount a directory to a route.
+	mount: [['/', './signage']], // Mount a directory to a route.
 	logLevel: 2, // 0 = errors only, 1 = some, 2 = lots
 	middleware: [function(req, res, next) { next(); }] // Takes an array of Connect-compatible middleware that are injected into the server middleware stack
 };
