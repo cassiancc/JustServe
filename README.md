@@ -9,7 +9,7 @@ JustServe is perfect for expos, conferences, and symposiums interested in having
 ## Requirements
 - A local network or Internet access that allows for the clients to reach the server at port 3000 (or otherwise configured), and admins to reach the server at port 5500.
   - It's recommended to host the server on the Internet through a cloud service like AWS or Oracle Cloud, and use [Tailscale](https://tailscale.com) to reach the server and unblocking port 3000 on its firewall.
-- A Linux server with [NodeJS/NPM](https://nodejs.org) installed. This can be a cloud server or VPC running a Linux distribution, or a Raspberry Pi.
+- A Linux server with [NodeJS/NPM](https://nodejs.org) installed. This can be a local Linux desktop or server, Linux cloud server/instance, or even a Raspberry Pi.
 - Clients with web browsers. Raspberry Pis will work, and are recommended.
 
 ## Installation
