@@ -2,15 +2,14 @@
 
 JustServe is a tool allowing for simple, reliable digital signage using a centralized server and allowing for multiple clients.
 
-JustServe is perfect for expos, conferences, and symposiums interested in having direct control over their signage. All a client needs is a web browser in order to connect to the main server, and the server itself can be lightweight enough
-to run on a Raspberry Pi or similar.
+JustServe is perfect for expos, conferences, and symposiums interested in having direct control over their signage and aren't interested in spending money for a paid plan just to be able to control more than one screen at once. All a client needs is a web browser in order to connect to the main server, and the server itself can be lightweight enough to run on a Raspberry Pi or similar.
 
-**NOTE:** JustServe is still in development and is therefore currently very developer focused. It is currently not recommended for a production environment. 
+**NOTE:** JustServe is still in active development! It is recommended that users be comfortable with Linux in order to set up JustServe. It is currently not recommended for a production environment. 
 
 ## Requirements
 - A local network or Internet access that allows for the clients to reach the server at port 3000 (or otherwise configured), and admins to reach the server at port 5500.
   - It's recommended to host the server on the Internet through a cloud service like AWS or Oracle Cloud, and use [Tailscale](https://tailscale.com) to reach the server and unblocking port 3000 on its firewall.
-- A server with [NodeJS/NPM](https://nodejs.org) installed. This is recommended to be Linux, but a Windows machine should work.
+- A Linux server with [NodeJS/NPM](https://nodejs.org) installed. This can be a cloud server or VPC running a Linux distribution, or a Raspberry Pi.
 - Clients with web browsers. Raspberry Pis will work, and are recommended.
 
 ## Installation
