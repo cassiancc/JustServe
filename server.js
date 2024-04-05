@@ -3,6 +3,15 @@ var http = require('http');
 var formidable = require('formidable');
 var fs = require('fs')
 
+
+//Make sure necessary user directories exist.
+if (!fs.existsSync('signage')){
+    fs.mkdirSync('signage');
+}
+if (!fs.existsSync('config')){
+    fs.mkdirSync('config');
+}
+
 //setup initial station count from stations.txt
 var stationCount = 2
 try {
@@ -12,11 +21,12 @@ try {
 catch {
 	fs.writeFileSync('./config/stations.txt', stationCount.toString())
 }
+
+//Setup intiial station settings from stations.json
 let stations = {
 	station1: "testing.jpg",
 	station2: "evenmoretest.jpg"
 }
-
 
 try {
 	stations = fs.readFileSync('./config/stations.json', 'utf8')
@@ -26,14 +36,13 @@ catch {
 	fs.writeFileSync('./config/stations.json', JSON.stringify(stations))
 }
 
+//Setup intial app configuration
 const configuration = {
 	configurationIP: "127.0.0.1",
 	configurationPORT: "3000",
 	signageIP: "127.0.0.1",
 	signagePORT: "5500"
 }
-
-
 
 // Create an HTTP server
 const server = http.createServer((req, res) => {
@@ -186,8 +195,6 @@ const server = http.createServer((req, res) => {
 			res.write(data);
 			res.end();
 		})
-
-
 	}
 	else if (req.url === '/css/frontend.css') {
 		fs.readFile('./css/frontend.css', 'utf8', (err, data) => { 
@@ -214,8 +221,6 @@ const server = http.createServer((req, res) => {
 			res.write(data);
 			res.end();
 		})
-
-
 	}
 	else if (req.url === `/css/font-awesome/fonts/fontawesome-webfont.woff?v=4.7.0`) {
 		fs.readFile('./css/font-awesome/fonts/fontawesome-webfont.woff', (err, data) => { 
@@ -241,8 +246,7 @@ const server = http.createServer((req, res) => {
 		res.end('Not Found');
 	}
   });
-  
-  // Listen on port 3000
+  // Listen on user defined port
   server.listen(configuration.configurationPORT, () => {
 	console.log('Configuration server is running on port ' + configuration.configurationPORT);
   });
