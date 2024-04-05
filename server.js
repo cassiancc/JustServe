@@ -143,6 +143,7 @@ const server = http.createServer((req, res) => {
 						</head>
 						<body>
 							<img id="content" src="img/${arrayFields[i-1][1][0]}" alt="">
+							<script src="/js/signage.js"></script>
 						</body>
 					</html>
 				`)
