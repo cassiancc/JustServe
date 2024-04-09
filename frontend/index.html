@@ -23,6 +23,8 @@
                 </form>
             </div>
             <div>
+                <form action="/change" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+
                 <div id="add-station" class="flex">
                     <h2>Station Management</h2>
                     <div>
@@ -34,13 +36,12 @@
                             <i class="fa fa-minus" aria-hidden="true"></i>
                             Remove Station
                         </button>
+                        <input id="submit-changes" type="submit" value="Apply Changes">
                     </div>
                     
                 </div>
-                <form action="/change" method="post" enctype="multipart/form-data" accept-charset="utf-8">
                     <div id="stations" class="station-div">
                         {{stations}}
-                        <input id="submit-changes" type="submit" value="Apply Changes">
 
                     </div>
                     

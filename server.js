@@ -105,7 +105,7 @@ const server = http.createServer((req, res) => {
 
 			for (let i = 1; i <= stationCount; i++) { 
 				stationString += 
-				`<div>
+				`<div class="station-individual">
 				<label>
 					<h3>
 						Station ${i}

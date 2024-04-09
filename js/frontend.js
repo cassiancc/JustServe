@@ -15,15 +15,7 @@ async function newStation() {
     }
 }
 async function rmStation() {
-    const response = await fetch(`/api/rmstation`, 
-    {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-        body: {addStations: 1}
-    });
+    const response = await fetch(`/api/rmstation`)
 
     if (response.ok) {        
         console.log("Removed one station.")
