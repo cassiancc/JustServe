@@ -136,6 +136,25 @@ const server = http.createServer((req, res) => {
 			for (let i = 1; i <= stationCount; i++) {
 				//Convert station object's arrays into strings
 				stations["station" + i] = arrayFields[i-1][1][0]
+				const content = arrayFields[i-1][1][0]
+				let embed;
+				console.log(content)
+				//photos
+				if (content.search('.jpg') != -1) {
+					embed =` <img id="content" src="img/${content}" alt=""></img>`
+					console.log("image")
+				}
+				//videos
+				else if (content.search('.mp4')) {
+					embed = `<video autoplay muted src="img/${content}"></video>`
+					console.log('video')
+
+				}
+				//if filetype is not matched, assume image
+				else {
+					embed =` <img id="content" src="img/${content}" alt=""></img>`
+					console.log("unknown image")
+				}
 				//Write new frontend pages with changed data
 				fs.writeFileSync(`./signage/index${i}.html`, 
 					`<!DOCTYPE html>
@@ -145,7 +164,7 @@ const server = http.createServer((req, res) => {
 							<link rel="stylesheet" href="css/live.css">
 						</head>
 						<body>
-							<img id="content" src="img/${arrayFields[i-1][1][0]}" alt="">
+							${embed}
 							<script src="/js/signage.js"></script>
 						</body>
 					</html>
