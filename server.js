@@ -11,6 +11,9 @@ if (!fs.existsSync('signage')){
 if (!fs.existsSync('config')){
     fs.mkdirSync('config');
 }
+if (!fs.existsSync('img')){
+    fs.mkdirSync('img');
+}
 
 //setup initial station count from stations.txt
 var stationCount = 2
