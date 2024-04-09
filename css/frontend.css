@@ -70,6 +70,7 @@ header h1 {
     padding: 1em;
     padding-top: 0;
     border-radius: 3px;
+    flex-wrap: wrap;
 }
 
 #new-content form {
