@@ -50,3 +50,24 @@ async function loadCurrentStationContent() {
 
 }
 loadCurrentStationContent()
+
+function showNewContentModal(station) {
+    console.log(station)
+
+    document.getElementById("new-content-modal").className = "visible-drop";
+
+    document.getElementById("new-content-modal").style.opacity = 0;
+    let opacity = parseFloat(document.getElementById("new-content-modal").style.opacity)
+    setInterval(function(){
+        if (opacity <= 1) {
+            opacity += 1
+            document.getElementById("new-content-modal").style.opacity = opacity
+        }
+    }, 15)
+
+    document.getElementById("new-content-modal").innerHTML = station
+    
+    
+    
+
+}

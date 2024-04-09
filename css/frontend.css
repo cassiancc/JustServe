@@ -65,7 +65,7 @@ header h1 {
 .station-div {
     background-color: var(--section);
     display: flex;
-    flex-direction: column;
+    justify-content: space-around;
     border-left: var(--red) solid 3px;
     padding: 1em;
     padding-top: 0;
@@ -75,6 +75,7 @@ header h1 {
 #new-content form {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .flex {
@@ -112,8 +113,15 @@ button:hover {
 
 .station-div h3 {
     font-size: 1.5em;
-    display: inline;
+    text-align: center;
+    /* display: inline; */
 
+}
+
+#stations div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .station-div label {
@@ -130,6 +138,8 @@ button:hover {
 #submit-changes, #upload-changes {
     margin-top: 1em;
     width: fit-content;
+    height: fit-content;
+    margin-top: auto;
 }
 
 
