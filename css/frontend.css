@@ -140,6 +140,10 @@ select {
 
 }
 
+#submit-changes {
+    margin-top: 1em !important;
+}
+
 #stations div {
     display: flex;
     flex-direction: column;
