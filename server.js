@@ -139,24 +139,80 @@ const server = http.createServer((req, res) => {
 				//Convert station object's arrays into strings
 				stations["station" + i] = arrayFields[i-1][1][0]
 				const content = arrayFields[i-1][1][0]
-				let embed;
-				console.log(content)
-				//photos
-				if (content.search('.jpg') != -1) {
-					embed =` <img id="content" src="img/${content}" alt=""></img>`
-					console.log("image")
-				}
-				//videos
-				else if (content.search('.mp4')) {
-					embed = `<video autoplay muted src="img/${content}"></video>`
-					console.log('video')
-
-				}
-				//if filetype is not matched, assume image
-				else {
-					embed =` <img id="content" src="img/${content}" alt=""></img>`
-					console.log("unknown image")
-				}
+				let embed, format;
+				//find extension
+				let extension = content.split(".")
+				extension = extension[extension.length-1]
+				extension = extension.toLowerCase()
+				//check extension against supported image formats
+				switch (extension) {
+					//PNG
+					case 'png':
+						format = "image"
+						break
+					//APNG
+					case 'apng':
+						format = "image"
+						break
+					//JPEG
+					case 'jpg':
+						format = "image"
+						break
+					case 'jpeg':
+						format = "image"
+						break
+					case 'pjpeg':
+						format = "image"
+						break
+					case 'pjp':
+						format = "image"
+						break
+					case 'jfif':
+						format = "image"
+						break
+					//SVG
+					case 'svg':
+						format = "image"
+						break
+					//AVIF
+					case 'avif':
+						format = "image"
+						break
+					//GIF
+					case 'gif':
+						format = "image"
+						break
+					//WEBP
+					case 'webp':
+						format = "image"
+						break
+					//MP4
+					case 'mp4':
+						format = "video"
+						break
+					//MP4
+					case 'webm':
+						format = "video"
+						break
+					//MP4
+					case 'ogg':
+						format = "video"
+						break
+					default:
+						format = "unknown"
+			    }
+				//change html based off of file format
+				switch (format) {
+					case 'image':
+						embed =` <img id="content" src="img/${content}" alt=""></img>`
+						break
+					case 'video':
+						embed = `<video autoplay muted src="img/${content}"></video>`
+						break
+					default:
+						embed =` <img id="content" src="img/${content}" alt=""></img>`
+						console.log("unknown image", extension, format)
+				} 
 				//Write new frontend pages with changed data
 				fs.writeFileSync(`./signage/index${i}.html`, 
 					`<!DOCTYPE html>
